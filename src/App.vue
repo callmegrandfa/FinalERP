@@ -1,29 +1,32 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <app-header></app-header>
+    <div class="wrapper">
+      <app-sidebar></app-sidebar>
+      <app-content></app-content>
+    </div>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import header from './components/header'
+import sidebar from './components/sidebar'
+import content from './components/content'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    'app-header':header,
+    'app-sidebar':sidebar,
+    'app-content':content,
   }
 }
 </script>
-
-<style lang='scss'>
-$color:red;
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: $color;
-  margin-top: 60px;
+<style scoped>
+.wrapper{
+  background-color: rgba(38, 52, 75, 1);
+  padding-top: 73px;
 }
 </style>
+
