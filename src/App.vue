@@ -27,6 +27,8 @@ export default {
 .wrapper{
   background-color: rgba(38, 52, 75, 1);
   padding-top: 73px;
+  position: relative;
+  overflow: hidden;
 }
 </style>
 

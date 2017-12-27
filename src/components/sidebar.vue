@@ -31,54 +31,54 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-$background:rgba(38, 52, 75, 1);
-$menuColor:#c3cee0;
+<style  scoped>
+
 .slidUl{
     width: 200px;
     height: auto;
-    background-color: $background;
+    background-color: rgba(38, 52, 75, 1);
     display: none;  
-    position: absolute;
+    position: fixed;
     left: 200px;
     top:0px;
 }
 .menu{
-    float: left;
     display: block;
-    position: fixed;
-    top:73px;
+    width: 200px;
+    top: 73px;
+    z-index:2;
     left: 0;
-    li{
-        list-style: none; 
-        width: 200px;
-        height: 46px;
-        text-align: left;
-        padding-left: 20px;
-        line-height: 46px;
-        position: relative;
-        &:hover{
-            background: #212d41;
-            color: #e4e9f2;
-        }
-        a{
-            color: $menuColor;
-            text-decoration: none;
-        }
-        &:hover{
-            text-decoration: none;
-        }
-    }
-    li.one:hover .slid1{
-        display: block;
-    }
-    li.two:hover .slid2{
-        display: block;
-    }
-    li.three:hover{
-        
-    }
-
+    float: left;
 }
+.menu li{
+    list-style: none; 
+    width: 200px;
+    height: 46px;
+    text-align: left;
+    padding-left: 20px;
+    line-height: 46px;
+    position: relative;
+}
+.menu li:hover{
+    background: #212d41;
+    color: #e4e9f2;
+}
+.menu li a{
+    color: #c3cee0;
+    text-decoration: none;
+}
+.menu li:hover{
+    text-decoration: none;
+}
+  
+.menu li.one:hover .slid1{
+    display: block;
+}
+.menu li.two:hover .slid2{
+    display: block;
+}
+
+
+
 
 </style>
