@@ -2,39 +2,39 @@
   <div class="groupManager">
     <el-container>
       <!-- 主表或查询条件信息 -->
-      <el-header class="header-input">
+      <el-header class="header-input mt-10">
         <el-row :gutter="20">
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="恒康科技" v-model="input3" size="medium">
                 <template slot="prepend">集团编码</template>
             </el-input>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="30" v-model="input3" size="medium">
                 <template slot="prepend">集团名称</template>
             </el-input>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="lomen" v-model="input3" size="medium">
                 <template slot="prepend">集团全称</template>
             </el-input>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="请输入助记码" v-model="input3" size="medium">
                 <template slot="prepend">助记码</template>
             </el-input>
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <div class="el-input el-input--medium el-input-group el-input-group--prepend">
-              <label class="label-title">行政地区</label>
+              <label class="label-title">行政地区	&nbsp&nbsp&nbsp&nbsp</label>
               <el-select v-model="value" placeholder="请选择">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </div>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <div class="el-input el-input--medium el-input-group el-input-group--prepend">
               <label class="label-title">启用会计月份</label>
               <el-select v-model="value" placeholder="请选择">
@@ -42,37 +42,37 @@
               </el-select>
             </div>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <div class="el-input el-input--medium el-input-group el-input-group--prepend">
-              <label class="label-title">本位币种</label>
+              <label class="label-title">本位币种&nbsp&nbsp&nbsp&nbsp</label>
               <el-select v-model="value" placeholder="请选择">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </div>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="请输入助记码" v-model="input3" size="medium">
                 <template slot="prepend">行业</template>
             </el-input>
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="恒康科技" v-model="input3" size="medium">
                 <template slot="prepend">电话</template>
             </el-input>
           </el-col>
-          <el-col :xs="12" :sm="6" :md="6" :lg="6">
+          <el-col :xs="12" :sm="6" :md="6" :lg="5">
             <el-input placeholder="30" v-model="input3" size="medium">
                 <template slot="prepend">传真</template>
             </el-input>
           </el-col>
-          <el-col :xs="10" :sm="8" :md="6" :lg="6">
+          <el-col :xs="10" :sm="8" :md="6" :lg="5">
             <el-input placeholder="请录入地址" v-model="input3" size="medium">
                 <template slot="prepend">地址</template>
             </el-input>
           </el-col>
-          <el-col :xs="10" :sm="8" :md="6" :lg="6">
+          <el-col :xs="10" :sm="8" :md="6" :lg="5">
             <el-input placeholder="请录入备注信息" v-model="input3" size="medium">
                 <template slot="prepend">备注</template>
             </el-input>
@@ -114,7 +114,7 @@
               </el-menu>
             </el-aside>
             <!-- 表格 -->
-            <el-main>
+            <el-main class="container-table">
               <el-table :data="tableData3" height="250" border style="width: 100%">
                 <el-table-column prop="date"  label="日期" width="180"></el-table-column>
                 <el-table-column prop="name" label="姓名" width="180"></el-table-column>
@@ -128,22 +128,22 @@
         <el-collapse v-model="activeNames">
           <el-collapse-item title="审计信息" name="1">
             <el-row :gutter="20">
-              <el-col :xs="12" :sm="6" :md="6" :lg="6">
+              <el-col :xs="12" :sm="6" :md="6" :lg="5">
                 <el-input placeholder="恒康科技" v-model="input3" size="medium">
                     <template slot="prepend">集团编码</template>
                 </el-input>
               </el-col>
-              <el-col :xs="12" :sm="6" :md="6" :lg="6">
+              <el-col :xs="12" :sm="6" :md="6" :lg="5">
                 <el-input placeholder="30" v-model="input3" size="medium">
                     <template slot="prepend">集团名称</template>
                 </el-input>
               </el-col>
-              <el-col :xs="12" :sm="6" :md="6" :lg="6">
+              <el-col :xs="12" :sm="6" :md="6" :lg="5">
                 <el-input placeholder="lomen" v-model="input3" size="medium">
                     <template slot="prepend">集团全称</template>
                 </el-input>
               </el-col>
-              <el-col :xs="12" :sm="6" :md="6" :lg="6">
+              <el-col :xs="12" :sm="6" :md="6" :lg="5">
                 <el-input placeholder="请输入助记码" v-model="input3" size="medium">
                     <template slot="prepend">助记码</template>
                 </el-input>
@@ -153,7 +153,6 @@
         </el-collapse>
       </el-footer>
     </el-container>
-    
   </div>
 </template>
 
@@ -308,5 +307,8 @@ body{
 }
 .el-collapse-item__header{
   font-size: 16px;
+}
+.container-table{
+  padding: 0 20px 0 40px;
 }
 </style>
