@@ -38,7 +38,7 @@ export default {
     height: auto;
     background-color: rgba(38, 52, 75, 1);
     display: none;  
-    position: fixed;
+    position: absolute;
     left: 200px;
     top:0px;
 }
@@ -46,6 +46,7 @@ export default {
     display: block;
     width: 200px;
     top: 73px;
+    position: fixed;
     z-index:2;
     left: 0;
     float: left;
