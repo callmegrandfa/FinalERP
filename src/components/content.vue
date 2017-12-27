@@ -1,12 +1,18 @@
 <template>
     <div class="content-wrapper">
-        <div class="content">neirong</div>
+        <div class="content">
+            <short-data></short-data>
+        </div>
+        
     </div>
 </template>
 <script>
-
+import shortdata from './dataTemplate/shortData'
 export default {
-  name: 'appcontent'
+  name: 'appcontent',
+  components: {
+    'short-data':shortdata,
+  }
 }
 </script>
 <style  scoped>
