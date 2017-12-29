@@ -19,8 +19,8 @@
                     <span>搜索</span>
                 </el-col>
 
-                <el-col :span='2' class="high-search" @click='searchShow'>
-                    <span>高级搜索</span>
+                <el-col :span='2' class="high-search">
+                    <span @click='searchShow'>高级搜索</span>
                 </el-col>
 
                 <el-col :span='2' class="gray-btn">
@@ -34,17 +34,9 @@
             <!-- 搜索框部分结束 -->
 
             <!-- 基础资料表单开始 -->
-            <el-row>
-                <el-col :span='4'>
-                    <div class="tree-container">
-                        <ul>
-                            <li v-for='item in companyTree'>{{item.big}}
-                                <ul>
-                                    <li v-for='items in item.small'>{{items}}</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+            <el-row class="basic-table">
+                <el-col :span='4' class="tree-container">
+                    <el-tree :data="componyTree" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
                 </el-col>
 
                 <el-col :span='20'>
@@ -71,259 +63,281 @@
                             </template>
                         </el-table-column>
                     </el-table> 
-                    <el-pagination class="text-right mt-10" background layout="total, prev, pager, next"  :page-count="totalPage" v-on:current-change="handleCurrentChange"></el-pagination>   
+                    <el-pagination style="margin-top:20px;" class="text-right" background layout="total, prev, pager, next"  :page-count="totalPage" v-on:current-change="handleCurrentChange"></el-pagination>   
                 </el-col>
             </el-row>
             <!-- 基础资料表单结束 -->
+
             <!-- 高級搜索開始 -->
             <div class="high-search-container" v-if='highSearchShow'>
-                <ul class="search-ul">
-                    <li class="">
+                
+                <el-row class="high-search-header">
+                    <el-col :span='6'>
                         <span>高级搜索</span>
-                    </li>
-                    <li class="more-high-search">
-                        <span>超级搜索</span>
-                    </li>
-                    <li class="close-li" @click='closeHighSearch'>
-                        <!-- <img src="../assets\layouts\layout2\img\close.png"/> -->
-                    </li>
-                </ul>
+                    </el-col>
+                    <el-col :span='6'>
+                       <span class="super-search"> 超级搜索</span>
+                    </el-col>
+                    <el-col :span='3' :offset="8" style="padding-top:10px;">
+                        <img src="../../assets/close.png" style="cursor:pointer;" @click="closeHighSearch">
+                    </el-col>
+                </el-row>
 
-                <div class="search-nav row">
-                    <div class="search-plan col-md-8">
+                <el-row>
+                    <el-col :span='5' :offset="1" class="search-plan">
                         <span>查询方案</span>
-                    </div>
-            
-                    <div class="search-edit col-md-2">
-                        <span @click='doEdit' 
-                              v-if='!canEdit'>编辑</span>
-
-                        <span @click='noEdit'
-                              v-if='canEdit'>确定</span>
-                    </div>
-            
-                    <div class="search-all col-md-2">
-                        <span style="color:#CCCCCC">全部</span>
-                        <!-- <img src="../assets\layouts\layout2\img\down.png"/> -->
-                    </div>
-                </div>
+                    </el-col>
+                    <el-col :span='4' :offset='10' class="search-edit">
+                        <span @click="doEdit" v-if="isChoose">编辑</span>
+                        <span @click="noEdit" v-if='noChoose'>保存</span>
+                    </el-col>
+                    <el-col :span='4'>
+                        <el-row>
+                            <el-col :span='12'>
+                                <span>全部</span>
+                            </el-col>
+                            <el-col :span='12'>
+                                <img src="../../assets/down.png" alt="">
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                </el-row>
 
                 <ul class="this-week">
                     <li v-if='week1'>
                         <span>本周未审核</span>
-                        <!-- <div @click='cancelweek1'>
+                        <div @click='cancelweek1'>
                             <img class="white-one" 
-                                src="../assets\layouts\layout2\img\whiteone.png"
+                                src="../../assets\whiteone.png"
                                 v-if='canEdit'>
 
                             <img class="red-bg" 
-                                src="../assets\layouts\layout2\img\redcircle.png" 
+                                src="../../assets\redcircle.png" 
                                 v-if='canEdit'>
-                        </div> -->
+                        </div>
                     </li>
 
                     <li v-if='week2'>
                         <span>本周已审核</span>
-                        <!-- <div @click='cancelweek2'>
+                        <div @click='cancelweek2'>
                             <img class="white-one" 
-                                src="../assets\layouts\layout2\img\whiteone.png"
+                                src="../../assets\whiteone.png"
                                 v-if='canEdit'>
 
                             <img class="red-bg" 
-                                src="../assets\layouts\layout2\img\redcircle.png" 
+                                src="../../assets\redcircle.png" 
                                 v-if='canEdit'>
-                        </div> -->
+                        </div>
                     </li>
                 </ul>
 
-                <div class="row">
-                    <div class="search-condition col-md-10">
+                <el-row>
+                    <el-col :span='20' offset='1'>
                         <span>查询条件</span>
-                    </div>
+                    </el-col>
             
-                    <div class="search-add col-md-2">
+                    <el-col :span='2' class="search-add">
                         <span>添加</span>
-                    </div>
-                </div>
+                    </el-col>
+                </el-row>
 
-                <div class="search-num">
-                    <input type="text" 
-                    class="form-control" 
-                    placeholder="请输入查询单号..." 
-                    style="width:80%">
-                </div>
+                <el-row class="search-num">
+                    <el-col :span='18' offset='1' 
+                            style="border:1px solid #cccccc;padding-left:10px;">
+                        <input type="text" 
+                                class="form-control" 
+                                placeholder="请输入查询单号..." 
+                                style="width:100%">
+                    </el-col>
+                </el-row>
 
-                <div class="data-status row">
-                        <div class="col-md-3" style='font-size:12px;margin-top:5px;margin-left:15px'>
-                            <span>单据状态</span>
-                        </div>
-            
-                        <ul  class="data-ul col-md-8 row" style="list-style:none">
-                            <!-- <li v-for='item in alreadyDo'>
+                <el-row class="data-status">
+                    <el-col :span='3' :offset='1' style="padding-top:5px">
+                        <span>单据状态</span>
+                    </el-col>
+                    <el-col :span='18' :offset="2">
+                        <ul  class="data-ul">
+                            <li v-for='item in alreadyDo'>
                                 <el-checkbox v-model="item.status" ></el-checkbox>
             
                                 <div class="status-ready">
                                     <span>{{item.name}}</span>
                                 </div>
-                            </li> -->
+                            </li>
                         </ul>
-                </div>
+                    </el-col>
+                </el-row>
 
-                <div class="business-status row">
-                    <div class="col-md-3" style='font-size:12px;margin-top:5px;margin-left:15px'>
+                <el-row class="data-status">
+                    <el-col :span='3' :offset='1' style="padding-top:5px">
                         <span>业务状态</span>
-                    </div>
+                    </el-col>
+
+                    <el-col :span="18" :offset="2">
+                         <ul  class="data-ul">
+                            <li v-for='item in businessStatus'>
+                                <el-checkbox v-model="item.status" ></el-checkbox>
             
-                    <ul  class="data-ul col-md-8 row" style="list-style:none">
-                        <!-- <li v-for='item in businessStatus'>
-                            <el-checkbox v-model="item.status" ></el-checkbox>
-        
-                            <div class="status-ready">
-                                <span>{{item.name}}</span>
-                            </div>
-                        </li> -->
-                    </ul>
-                </div>
+                                <div class="status-ready">
+                                    <span>{{item.name}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </el-col>
+                </el-row>
+
+                <el-row class="search-depend">
+                    <el-col :span="3" :offset="1">
+                        <span>货号</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-depend-after">
+                        <el-row class="search-box">
+                            <el-col :span="2" class="logo-p">
+                                 <img src="../../assets\searchLogo.png" alt="">
+                            </el-col>
+                           <el-col :span="18" :offset="1">
+                               <input type="text" placeholder="请输入货号">
+                           </el-col>
+                        </el-row> 
+                    </el-col>
+                </el-row>
+
+                <el-row class="search-depend">
+                    <el-col :span="3" :offset="1">
+                        <span>供应商</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-depend-after">
+                        <el-row class="search-box">
+                            <el-col :span="2" class="logo-p">
+                                 <img src="../../assets\searchLogo.png" alt="">
+                            </el-col>
+                           <el-col :span="18" :offset="1">
+                               <input type="text" placeholder="请输入供应商">
+                           </el-col>
+                        </el-row> 
+                    </el-col>
+                </el-row>
+
+                <el-row class="search-depend">
+                    <el-col :span="3" :offset="1">
+                        <span>仓库</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-depend-after">
+                        <el-row class="search-box">
+                            <el-col :span="2" class="logo-p">
+                                 <img src="../../assets\searchLogo.png" alt="">
+                            </el-col>
+                           <el-col :span="18" :offset="1">
+                               <input type="text" placeholder="请输入仓库">
+                           </el-col>
+                        </el-row> 
+                    </el-col>
+                </el-row>
+
+                 <el-row class="search-depend">
+                    <el-col :span="3" :offset="1">
+                        <span>PO单号</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-depend-after">
+                        <el-row class="search-box">
+                            <el-col :span="2" class="logo-p">
+                                 <img src="../../assets\searchLogo.png" alt="">
+                            </el-col>
+                           <el-col :span="18" :offset="1">
+                               <input type="text" placeholder="请输入PO单号">
+                           </el-col>
+                        </el-row> 
+                    </el-col>
+                </el-row>
+
+                 <el-row class="search-depend">
+                    <el-col :span="3" :offset="1">
+                        <span>PO类型</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-depend-after">
+                        <el-row class="search-box">
+                            <el-col :span="2" class="logo-p">
+                                 <img src="../../assets\searchLogo.png" alt="">
+                            </el-col>
+                           <el-col :span="18" :offset="1">
+                               <input type="text" placeholder="请输入PO类型">
+                           </el-col>
+                        </el-row> 
+                    </el-col>
+                </el-row>
+
+                 <el-row class="search-depend">
+                    <el-col :span="3" :offset="1">
+                        <span>品牌</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-depend-after">
+                        <el-row class="search-box">
+                            <el-col :span="2" class="logo-p">
+                                 <img src="../../assets\searchLogo.png" alt="">
+                            </el-col>
+                           <el-col :span="18" :offset="1">
+                               <input type="text" placeholder="请输入品牌">
+                           </el-col>
+                        </el-row> 
+                    </el-col>
+                </el-row>
                 
-                <ul class="search-depend">
-                    <li class="row">
-                        <div class="col-md-3">
-                            <span>货号</span>
-                        </div>
-                        <div class="search-box col-md-7">
-                            <!-- <img src="../assets\layouts\layout2\img\searchLogo.png" alt=""> -->
-                            <input type="text" placeholder="请输入货号">
-                        </div> 
-                    </li>
-                    <li class="row">
-                        <div class="col-md-3">
-                            <span>供应商</span>
-                        </div>
-                        <div class="search-box col-md-7">
-                            <!-- <img src="../assets\layouts\layout2\img\searchLogo.png" alt=""> -->
-                            <input type="text" placeholder="请输入供应商">
-                        </div> 
-                    </li>
-                    <li class="row">
-                        <div class="col-md-3">
-                            <span>仓库</span>
-                        </div>
-                        <div class="search-box col-md-7">
-                            <!-- <img src="../assets\layouts\layout2\img\searchLogo.png" alt=""> -->
-                            <input type="text" placeholder="请输入仓库">
-                        </div> 
-                    </li>
-                    <li class="row">
-                        <div class="col-md-3">
-                            <span>PO单号</span>
-                        </div>
-                        <div class="search-box col-md-7">
-                            <!-- <img src="../assets\layouts\layout2\img\searchLogo.png" alt=""> -->
-                            <input type="text" placeholder="请输入PO单号">
-                        </div> 
-                    </li>
-                    <li class="row">
-                        <div class="col-md-3">
-                            <span>PO类型</span>
-                        </div>
-                        <div class="search-box col-md-7">
-                            <!-- <img src="../assets\layouts\layout2\img\searchLogo.png" alt=""> -->
-                            <input type="text" placeholder="请输入PO类型">
-                        </div> 
-                    </li>
-                    <li class="row">
-                        <div class="col-md-3">
-                            <span>PO品牌</span>
-                        </div>
-                        <div class="search-box col-md-7">
-                            <!-- <img src="../assets\layouts\layout2\img\searchLogo.png" alt=""> -->
-                            <input type="text" placeholder="请输入PO品牌">
-                        </div> 
-                    </li>
-                </ul>
-                
-                <div class="search-date">
-                    <ul>
-                        <li class="row">
-                            <div class="col-md-3">
-                                <span>开单日期</span>
-                            </div>
-
-                            <div class="choose-date col-md-8">
-                                <!-- <div class="choose-start">
-                                    <input type="text" placeholder="开始..."/>
-                                    <img src="../assets\layouts\layout2\img\dateLogo.png" alt="">
-                                </div>
-                                <div class="choose-end">
-                                    <input type="text" placeholder="结束..."/>
-                                    <img src="../assets\layouts\layout2\img\dateLogo.png" alt="">
-                                </div> -->
-                                <el-date-picker
-                                v-model="data1"
-                                type="date"
-                                placeholder="选择日期">
-                              </el-date-picker>
-                              <el-date-picker
-                              v-model="data1"
-                              type="date"
-                              placeholder="选择日期">
+                <el-row class="search-date">
+                    <el-col :span="3" :offset="1">
+                        <span>开单日期</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-date-after">
+                        <el-date-picker
+                            v-model="billingDate"
+                            type="daterange"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            default-value="2010-10-01">
                             </el-date-picker>
-                            </div>
-                        </li>
+                    </el-col>
+                </el-row>
 
-                        <li class="row">
-                            <div class="col-md-3">
-                                <span>生效日期</span>
-                            </div>
-
-                            <div class="choose-date col-md-8">
-                                <el-date-picker
-                                v-model="data1"
-                                type="date"
-                                placeholder="选择日期">
-                              </el-date-picker>
-                              <el-date-picker
-                              v-model="data1"
-                              type="date"
-                              placeholder="选择日期">
+                <el-row class="search-date">
+                    <el-col :span="3" :offset="1">
+                        <span>生效日期</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-date-after">
+                        <el-date-picker
+                            v-model="workDate"
+                            type="daterange"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            default-value="2010-10-01">
                             </el-date-picker>
-                            </div>
-                        </li>
+                    </el-col>
+                </el-row>
 
-                        <li class="row">
-                            <div class="col-md-3">
-                                <span>交货日期</span>
-                            </div>
+                <el-row class="search-date">
+                    <el-col :span="3" :offset="1">
+                        <span>交货日期</span>
+                    </el-col>
+                    <el-col :span="15" :offset="2" class="search-date-after">
+                        <el-date-picker
+                            v-model="dealDate"
+                            type="daterange"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            default-value="2010-10-01">
+                            </el-date-picker>
+                    </el-col>
+                </el-row>
 
-                            <div class="choose-date col-md-8">
-                                <div class="choose-start">
-                                    <input type="text" placeholder="开始..."/>
-                                    <!-- <img src="../assets\layouts\layout2\img\dateLogo.png" alt=""> -->
-                                </div>
-                                <div class="choose-end">
-                                    <input type="text" placeholder="结束..."/>
-                                    <!-- <img src="../assets\layouts\layout2\img\dateLogo.png" alt=""> -->
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="last-btn">
-                    <ul class="row">
-                        <li class="col-md-3">
-                            <span class="s-btn">查询</span>
-                        </li>
-
-                        <li class="col-md-3">
-                            <span class="r-btn">重置</span>
-                        </li>
-
-                        <li class="col-md-3">
-                            <span class="c-btn">取消</span>
-                        </li>
-                    </ul>
-                </div>
+                <el-row  class="last-btn">
+                    <el-col :span="3" :offset="3">
+                        <span class="s-btn">查询</span>
+                    </el-col>
+                    <el-col :span="3" :offset="3">
+                        <span class="r-btn">重置</span>
+                    </el-col>
+                    <el-col :span="3" :offset="3">
+                        <span class="c-btn">取消</span>
+                    </el-col>
+                </el-row>
             </div>
             <!-- 高級搜索結束 -->
         </div>
@@ -336,13 +350,15 @@ export default {
   name: 'shortdata',
   data(){
       return{
-         highSearchShow:false,
+            highSearchShow:false,//控制高级搜索显示
 			canEdit:false,
 			week1:true,
 			week2:true,
 			isChoose:true,
 			noChoose:false,
-			data1:'',
+			dealDate:'',//成交日期
+            workDate:'',//生效日期
+            billingDate:'',//开单日期
 			inputIndex:'',
 			alreadyDo:[{name:'已审核',status:true},//高级搜索单据状态
 					   {name:'已送审',status:true},
@@ -354,17 +370,41 @@ export default {
 			businessStatus:[{name:'已生成',status:true},
 							{name:'未生成',status:true}],	
 
-			companyTree:[{//左边树形
-				big:'上级1',
-				small:['下级1','下级2','下级3','下级4']
-				},{
-					big:'上级2',
-					small:['下级1','下级2','下级3','下级4']
-				},{
-					big:'上级3',
-					small:['下级1','下级2','下级3','下级4']
-				}
-			],
+			componyTree: [{
+                label: '一级 1',
+                children: [{
+                    label: '二级 1-1',
+                    children: [{
+                    label: '三级 1-1-1'
+                    }]
+                }]
+                }, {
+                label: '一级 2',
+                children: [{
+                    label: '二级 2-1',
+                    children: [{
+                    label: '三级 2-1-1'
+                    }]
+                }, {
+                    label: '二级 2-2',
+                    children: [{
+                    label: '三级 2-2-1'
+                    }]
+                }]
+                }, {
+                label: '一级 3',
+                children: [{
+                    label: '二级 3-1',
+                    children: [{
+                    label: '三级 3-1-1'
+                    }]
+                }, {
+                    label: '二级 3-2',
+                    children: [{
+                    label: '三级 3-2-1'
+                    }]
+                }]
+                }],
 			tableData: [{
 				sequence: '1',
 				a:'序号',
@@ -437,6 +477,77 @@ export default {
 			totalPage:20,//当前分页总数
       }
   },
+  methods:{
+		ajaxGet:function(){// 发送ajax请求---get后面括号参数为请求数据的地址
+			// 为给定 ID 的 user 创建请求
+			let self = this;
+			self.axios.get('/user?ID=12345')
+			.then(function (response) {//成功，response为返回的数据
+			console.log(response);
+			})
+			.catch(function (error) {//失败
+			console.log(error);
+			});
+		},
+		ajaxPost:function(){// 发送ajax请求---post
+			let self = this;
+			self.axios.post('/user', {
+				firstName: 'Fred',
+				lastName: 'Flintstone'
+			  })
+			  .then(function (response) {
+				console.log(response);
+			  })
+			  .catch(function (error) {
+				console.log(error);
+			  });
+		},
+        handleNodeClick(data) {//树形结构
+            console.log(data);
+        },
+		handleEdit:function(index){//表格内编辑操作
+			this.isEdit=index;//当选中行的索引值与列表中索引值相同，则编辑！
+		},
+		handleDelete:function(index){//表格内删除操作
+			this.tableData.splice(index,1);
+		},
+		finishEdit: function(index) {//表格内编辑完成事件
+			this.isEdit=-1;
+		},
+		handleCurrentChange:function(val){//获取当前页码
+			this.pageIndex=val;
+		},
+		searchShow:function(){
+			let self = this;
+			self.highSearchShow = true;
+            console.log(self.highSearchShow)
+		},
+		closeHighSearch:function(){
+			let self = this;
+			self.highSearchShow = false;
+		},
+		doEdit:function(){
+			let self = this;
+			self.canEdit = true;
+            self.isChoose = false;
+            self.noChoose = true;
+		},
+		noEdit:function(){
+			let self = this;
+			self.canEdit = !self.canEdit;
+            self.isChoose = true;
+            self.noChoose = false;
+		},
+		cancelweek1:function(){
+			let self = this;
+			self.week1 = false;
+		},
+		cancelweek2:function(){
+			let self = this;
+			self.week2 = false;
+		},
+		
+	},
 }
 </script>
 
@@ -444,9 +555,6 @@ export default {
 .short-basic-data{
     background: white;
     border: 1px solid #cccccc;
-}
-.tree-container{
-    background: white;
 }
 /* 搜索框部分開始 */
 .search-component{
@@ -496,16 +604,18 @@ export default {
     color:white;
 }
 .high-search{
+    margin-left: 12px;
+}
+.high-search span{
+    color: white;
     background: #82AAFC;
     height: 30px;
     line-height: 30px;
     text-align: center;
     border-radius: 3px;
     cursor: pointer;
-    margin-left: 12px;
-}
-.high-search span{
-    color: white;
+    display: inline-block;
+    width: 100%;
 }
 .gray-btn{
     float: right;
@@ -522,7 +632,7 @@ export default {
 
 
 /* 重写checkbox */
-.el-checkbox__inner::after{
+.el-checkbox__inner{
     width: 24px;
     height: 24px;
     border-radius:50% !important; 
@@ -584,48 +694,44 @@ export default {
 } 
 
 /* 资料列表部分开始 */
+.tree-container{
+    border-top: 1px solid #ebeef5;
+}
+.tree-container ul{
+    list-style: none;
+}
 
 /* 资料列表部分结束 */
+
+/* 高级搜索开始 */
 .high-search-container{
     position: fixed;
     right: 0;
     top: 0;
     z-index: 1000;
-    float: right;
-    width: 30%;
+    width: 25%;
     background: white;
     border-left: 3px solid rgba(50, 50, 50, .2);
     height: 100%;
 }
+.high-search-header{
+    height: 73px;
+    line-height: 73px;
+    border-bottom: 1px solid #cccccc;
+}
+.high-search-header .el-col{
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center
+}
+.super-search{
+    color: #169BD5;
+}
 
-.search-ul{
-    list-style: none;
-    padding: 0;
-    height: auto;
-    border-bottom: 1px solid #999999;
-}
-.search-ul li{
-    display: inline-block;
-    font-size: 18px;
-    margin-left: 20px;
-    margin-top: 25px;
-    height: 37px;
-    line-height: 37px;
-    margin-bottom: 3px;
-}
-.search-ul .more-high-search{
-    color: #82AAFC;
-    cursor: pointer;
-}
-.search-ul .close-li{
-    float:right;
-    cursor: pointer;
-    margin-right:15px;
-}
 .search-plan{
-    padding-left: 30px;
+    
 }
-.search-edit{
+.search-edit span{
     text-align: center;
     cursor: pointer;
     color: #82AAFC;
@@ -664,16 +770,18 @@ export default {
     z-index: 10000;
     cursor: pointer;
 }
-.search-condition{
-    padding-left: 30px;
-}
 .search-add{  
     cursor: pointer;
     color: #cccccc;
 }
 .search-num{
     margin-top: 10px;
-    padding-left:15px; 
+}
+.search-num input{
+    height: 32px;
+    line-height: 32px;
+    border: none;
+    outline: none;
 }
 .data-ul li{
     display: inline-block;
@@ -701,120 +809,91 @@ export default {
     cursor: pointer;
 }
 .data-status{
-    padding-top:10px; 
+    font-size: 14px;
 }
 .data-status .data-ul{
-    padding: 0;
-}
-.business-status{
-    padding-top:10px; 
-}
-.business-status .data-ul{
-    padding: 0;
-}
-.status-ready{
-    margin-left: 5px;
+    list-style:none;
 }
 .data-ul li{
     margin-left: 30px;
     margin-top: 5px;
 }
+.status-ready{
+    margin-left: 5px;
+}
 
 .search-depend{
-    list-style: none;
-    padding: 0;
-
+    font-size: 14px;
+    padding-top: 5px;
 }
-.search-depend li{
-    padding-left: 15px;
-    margin-top: 10px;
+.search-depend-after{
+    height: 33px;
+    padding-left: 30px;
 }
 .search-box{
-    position: relative;
-    height: 33px;
     border: 1px solid #cccccc;
-    line-height: 33px;
-    margin-left: 20px;
     border-radius: 3px;
 }
-.search-box input{
-    position: absolute;
-    left: 40px;
-    top: 3px;
+.search-box input{ 
     border:none;
     outline: none;
     height: 26px;
+    width: 100%;
 }
-.search-date ul{
-    list-style: none;
-    padding: 0;
+.logo-p{
+    padding-top:3px;
+    padding-left: 3px; 
 }
-.search-date ul li{
-    padding-left:15px; 
+.logo-p img{
+    width: 23px;
+    height: 23px;
+}
+.search-date{
     margin-top: 5px;
 }
-.choose-start,.choose-end{
-    display: inline-block;   
-    position: relative;
-    border: 1px solid #cccccc;
-    border-radius: 3px;
-    height: 30px;
-    line-height: 25px;
-     
-}
-.choose-date{
-    margin-left: 5px;
-}
-.choose-date input{
-   width: 125px;
-   border: none;
-   outline: none;
-   padding-left:5px;
-}
-.choose-date input::-webkit-inner-spin-button {
-     visibility: hidden;
- }
-.choose-date img{
-    position: absolute;
-    right: 5px;
-    top:3px;
-}
-.last-btn{
-    margin-top: 18px;
+.search-date span{
+    font-size: 14px;
 }
 
-.last-btn ul{
-    padding:0;
-    list-style: none;
-    padding-left: 15px;
+.el-date-editor.el-input[data-v-48e3e0c4], .el-date-editor.el-input__inner[data-v-48e3e0c4]{
+    width: 100%;
 }
-.last-btn ul li{
-    display: inline-block;
-    cursor: pointer;
+.search-date-after{
+    margin-left: 30px;
 }
-.last-btn  ul li span{
-    width: 89px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    display: inline-block;
-    border-radius: 3px;
+.last-btn{
+    margin-top: 10px;
 }
 .s-btn{
+    display: inline-block;
     background: #82AAFC;
     color: white;
+    height: 30px;
+    width: 90px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 3px;
 }
 .r-btn{
+    display: inline-block;
     background: rgba(255, 204, 102, 1);
     color: white;
+    height: 30px;
+    width: 90px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 3px;
 }
 .c-btn{
+    display: inline-block;
     background: rgba(245, 94, 110, 1);
     color: white;
+    height: 30px;
+    width: 90px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 3px;
 }
-.el-table__row input[disabled]{
-    background: none;
-    border: none;
-}
+/* 高级搜索结束 */
 
 </style>
