@@ -630,69 +630,6 @@ export default {
 /* 搜索框部分結束 */
 
 
-
-/* 重写checkbox */
-.el-checkbox__inner{
-    width: 24px;
-    height: 24px;
-    border-radius:50% !important; 
-}
-.el-checkbox__inner::after{
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-    content: "";
-    border: 3px solid #fff;
-    border-left: 0;
-    border-top: 0;
-    height: 11px;
-    left: 6px;
-    position: absolute;
-    top: 1px;
-    -webkit-transform: rotate(45deg) scaleY(0);
-    transform: rotate(45deg) scaleY(0);
-    width: 6px;
-    -webkit-transition: -webkit-transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
-    transition: -webkit-transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
-    transition: transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
-    transition: transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms,-webkit-transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
-    -webkit-transform-origin: center;
-    transform-origin: center;
-}
-
-/* 重写el-table样式 */
-.el-table th {
-    white-space: nowrap;
-    overflow: hidden;
-    user-select: none;
-    text-align: left;
-    padding: 5px 0;
-    text-align: center;
-    background-color: #ececec;
-}
-.el-table td{
-    padding: 3px 0;
-}
-.el-table__body{
-    text-align: center;
-}
-/* 重写el-pagination样式 */
-.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{
-    border-radius: 50%;
-}
-
-.text-right{
-    text-align: right;
-}
-.mt-10{
-    margin-top: 10px;
-}
-.el-date-editor.el-input, .el-date-editor.el-input__inner{
-    width: 130px;
-}
-.el-input--suffix .el-input__inner{
-    padding-right: 0;
-} 
-
 /* 资料列表部分开始 */
 .tree-container{
     border-top: 1px solid #ebeef5;
@@ -896,4 +833,68 @@ export default {
 }
 /* 高级搜索结束 */
 
+</style>
+
+<style>
+/* 重写checkbox */
+.el-checkbox__inner{
+    width: 24px;
+    height: 24px;
+    border-radius:50% !important; 
+}
+.el-checkbox__inner::after{
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    content: "";
+    border: 3px solid #fff;
+    border-left: 0;
+    border-top: 0;
+    height: 11px;
+    left: 6px;
+    position: absolute;
+    top: 1px;
+    -webkit-transform: rotate(45deg) scaleY(0);
+    transform: rotate(45deg) scaleY(0);
+    width: 6px;
+    -webkit-transition: -webkit-transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
+    transition: -webkit-transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
+    transition: transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
+    transition: transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms,-webkit-transform .15s cubic-bezier(.71,-.46,.88,.6) 50ms;
+    -webkit-transform-origin: center;
+    transform-origin: center;
+}
+
+/* 重写el-table样式 */
+.el-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    user-select: none;
+    text-align: left;
+    padding: 5px 0;
+    text-align: center;
+    background-color: #ececec;
+}
+.el-table td{
+    padding: 3px 0;
+}
+.el-table__body{
+    text-align: center;
+}
+/* 重写el-pagination样式 */
+.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{
+    border-radius: 50%;
+}
+
+.text-right{
+    text-align: right;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.el-date-editor.el-input, .el-date-editor.el-input__inner{
+    width: 130px;
+}
+.el-input--suffix .el-input__inner{
+    padding-right: 0;
+} 
 </style>
